@@ -4,10 +4,17 @@
 
 #include "vector.h"
 
-int term_dirty;
+typedef struct
+{
+  int dirty; //Should redraw?
+  int cur_x; //Cursor X
+  int cur_y; //Cursor Y
 
-void term_init();
-void term_draw(Vector *v);
-void term_update();
-int  term_get_input();
+} Terminal;
+
+void term_init(Terminal *t);
+void term_begin();
+void term_update_cursor(Terminal *t);
+void term_draw(Terminal *t, Vector *v);
+void term_update(Terminal *t, Vector *v);
 void term_end();

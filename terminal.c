@@ -1,10 +1,17 @@
 #include <ncurses.h>
+#include <stdlib.h>
+
 #include "vector.h"
 #include "terminal.h"
 
-int term_dirty = 1;
+void term_init(Terminal *t)
+{
+  t->dirty = 1;
+  t->cur_x = 0;
+  t->cur_y = 0;
+}
 
-void term_init()
+void term_begin()
 {
   initscr();
   
@@ -15,7 +22,13 @@ void term_init()
   keypad(stdscr, true);
 }
 
-void term_draw(Vector *v)
+void term_update_cursor(Terminal *t)
+{
+  move(t->cur_y, t->cur_x);
+  refresh();
+}
+
+void term_draw(Terminal *t, Vector *v)
 {
   int curchar;
 
@@ -40,27 +53,42 @@ void term_draw(Vector *v)
   }
 
   refresh();
-  term_dirty = 0;
+  t->dirty = 0;
 }
 
-void term_update(Vector *v)
+void term_update(Terminal *t, Vector *v)
 {
   int c = getch(); //term_get_input();
 
-  if(c == KEY_BACKSPACE) {
+  switch(c) {
+  case KEY_BACKSPACE:
     vector_pop(v);
-    term_dirty = 1;
-  } else {
-    vector_append(v, c);
-    term_dirty = 1;
-  }
-  //clear();
-}
+    t->dirty = 1;
+    break;
 
-int term_get_input()
-{
-  int c = getch();
-  return c;
+  case KEY_DOWN:
+    t->cur_y++;
+    break;
+
+  case KEY_UP:
+    t->cur_y--;
+    break;
+
+  case KEY_LEFT:
+    t->cur_x--;
+    break;
+
+  case KEY_RIGHT:
+    t->cur_x++;
+    break;
+    
+  default:
+    vector_append(v, c);
+    t->dirty = 1;
+  }
+  
+  term_update_cursor(t);
+  //clear();
 }
 
 void term_end()

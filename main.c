@@ -9,12 +9,16 @@ int main(int argc, char **argv)
   Vector text;
   vector_init(&text);
 
-  term_init();
+  Terminal term;
+  term_init(&term);
+
+  term_begin();
   while(1)
   {
-    if(term_dirty)
-      term_draw(&text);
-    term_update(&text);
+    if(term.dirty)
+      term_draw(&term, &text);
+
+    term_update(&term, &text);
   }
 
   term_end();
