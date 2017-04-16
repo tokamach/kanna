@@ -16,17 +16,27 @@ void term_init()
 void term_draw(Vector *v)
 {
   char curchar;
-  int curline = 0;
 
-  for(int i = 0; i < v->size; i++) {
+  int i = 0;
+  int x = 0;
+  int y = 0;
+
+  while(i < v->size) {
     curchar = vector_get(v, i);
+
     if(curchar == '\n') {
-      curline++;
+      y++;
+      x = 0;
+    } else if (curchar == 127) { //backspace
+      move(y, x);
+      addch('B');
     } else {
-      move(curline, i);
+      move(y, x);
       addch(curchar);
+      x += 1;
     }
 
+    i += 1;
   }
 
   refresh();
@@ -36,7 +46,11 @@ void term_update(Vector *v)
 {
   int c = getch(); //term_get_input();
 
-  vector_append(v, (char)c);
+  if(c == 127) {
+    vector_append(v, 'B');
+  } else {
+    vector_append(v, (char)c);
+  }
 }
 
 int term_get_input()
