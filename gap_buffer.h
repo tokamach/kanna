@@ -1,12 +1,13 @@
 #pragma strict
 #include "vector.h"
 
+
 // gap buffer data structure
 typedef struct 
 {
   Vector buf;
 
-  int size; //buffer size
+  //int size; //buffer size
   int pre;  //pre gap array index
   int post; //post gap array index
 
