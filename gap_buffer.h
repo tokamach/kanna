@@ -1,4 +1,4 @@
-#pragma strict
+#pragma once
 #include "vector.h"
 
 

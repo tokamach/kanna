@@ -1,4 +1,4 @@
-#pragma strict
+#pragma once
 #define VECTOR_INITIAL_CAPACITY 50
 
 typedef struct
