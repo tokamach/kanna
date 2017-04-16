@@ -4,6 +4,8 @@
 
 #include "vector.h"
 
+int term_dirty;
+
 void term_init();
 void term_draw(Vector *v);
 void term_update();

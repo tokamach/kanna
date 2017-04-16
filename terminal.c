@@ -2,6 +2,8 @@
 #include "vector.h"
 #include "terminal.h"
 
+int term_dirty = 1;
+
 void term_init()
 {
   initscr();
@@ -38,6 +40,7 @@ void term_draw(Vector *v)
   }
 
   refresh();
+  term_dirty = 0;
 }
 
 void term_update(Vector *v)
@@ -46,8 +49,10 @@ void term_update(Vector *v)
 
   if(c == KEY_BACKSPACE) {
     vector_pop(v);
+    term_dirty = 1;
   } else {
     vector_append(v, c);
+    term_dirty = 1;
   }
   //clear();
 }
