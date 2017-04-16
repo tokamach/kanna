@@ -44,7 +44,7 @@ void term_update(Vector *v)
   int c = getch(); //term_get_input();
 
   if(c == KEY_BACKSPACE) {
-    vector_append(v, 'B');
+    vector_pop(v);
   } else {
     vector_append(v, c);
   }

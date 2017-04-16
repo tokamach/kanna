@@ -17,6 +17,12 @@ void vector_append(Vector *vector, char val)
   vector->data[vector->size++] = val;
 }
 
+void vector_pop(Vector *vector)
+{
+  vector->data[vector->size - 1] = 0;
+  vector->size--;
+}
+
 char vector_get(Vector *vector, int pos)
 {
   if(pos >= vector->size || pos < 0)
