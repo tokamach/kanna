@@ -27,6 +27,7 @@ void term_draw(Vector *v)
     if(curchar == '\n') {
       y++;
       x = 0;
+      move(y,x);
     } else {
       move(y, x);
       addch(curchar);
@@ -48,6 +49,7 @@ void term_update(Vector *v)
   } else {
     vector_append(v, c);
   }
+  //clear();
 }
 
 int term_get_input()
