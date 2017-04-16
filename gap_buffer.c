@@ -1,3 +1,5 @@
+//yukari would approve
+
 #include "gap_buffer.h"
 #include "vector.h"
 

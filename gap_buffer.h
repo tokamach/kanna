@@ -1,3 +1,5 @@
+//yukari would approve
+
 #pragma once
 #include "vector.h"
 
