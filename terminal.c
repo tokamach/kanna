@@ -15,9 +15,18 @@ void term_init()
 
 void term_draw(Vector *v)
 {
+  char curchar;
+  int curline = 0;
+
   for(int i = 0; i < v->size; i++) {
-    move(1, i);
-    addch(vector_get(v, i));
+    curchar = vector_get(v, i);
+    if(curchar == '\n') {
+      curline++;
+    } else {
+      move(curline, i);
+      addch(curchar);
+    }
+
   }
 
   refresh();
