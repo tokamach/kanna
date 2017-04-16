@@ -1,0 +1,12 @@
+* Todo
+** core
+*** Remove vector dependency for gapbuf
+*** add read and write files from gapbuf
+*** implement ncurses terminal ui
+** keymap
+*** design keymap
+** chibi
+*** set up build script for chibi-scheme
+*** test integration
+*** add hooks for editor functions to scheme functions
+*** autoload scheme files from directory
