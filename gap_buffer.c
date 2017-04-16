@@ -10,3 +10,28 @@ void gb_init(GapBuffer *gb)
 
   vector_init(gb->buf);
 }
+
+void gb_step_forward(GapBuffer *gb)
+{
+  
+}
+
+void gb_step_backward(GapBuffer *gb)
+{
+
+}
+
+void gb_move_by(GapBuffer *gb, int mov)
+{
+
+}
+
+void gb_insert_char(GapBuffer *gb, char val)
+{
+
+}
+
+void gb_insert_str(GapBuffer *gb, char *vals)
+{
+
+}
