@@ -1,10 +1,11 @@
+#pragma strict
 #define VECTOR_INITIAL_CAPACITY 50
 
 typedef struct
 {
   int size;
   int capacity;
-  char* slots;
+  char* data;
 } Vector;
 
 void vector_init(Vector *vector);
