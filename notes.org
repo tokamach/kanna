@@ -1,3 +1,8 @@
+* Design Goals
+Like kanna kamui must be:
+** smol
+** magical
+
 * Todo
 ** core
 *** Remove vector dependency for gapbuf
