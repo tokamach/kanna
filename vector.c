@@ -17,9 +17,9 @@ void vector_append(Vector *vector, char val)
   vector->data[vector->size++] = val;
 }
 
-void vector_get(Vector *vector, int pos)
+char vector_get(Vector *vector, int pos)
 {
-  if(pos >= vector->size || index < 0)
+  if(pos >= vector->size || pos < 0)
   {
     //shit
     printf("[ERROR] Vector index %i out of bounds for vector of size %i",
@@ -32,11 +32,11 @@ void vector_get(Vector *vector, int pos)
 
 void vector_set(Vector *vector, int pos, char val)
 {
-  while(index >= vector->size) {
+  while(pos >= vector->size) {
     vector_append(vector, 0);
   }
 
-  vector->data[index] = val;
+  vector->data[pos] = val;
 }
 
 void vector_double_capacity_if_full(Vector *vector)
