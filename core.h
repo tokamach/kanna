@@ -15,3 +15,16 @@ typedef struct
 } Editor;
 
 void editor_init(Editor *e);
+
+//standard editor functions
+
+//movement
+void editor_forward(Editor *e);
+void editor_back(Editor *e);
+void editor_up(Editor *e);
+void editor_down(Editor *e);
+
+//insertion and deletion
+void editor_insert_char(Editor *e, char c);
+void editor_insert_str(Editor *e, char *s);
+void editor_backspace(Editor *e);

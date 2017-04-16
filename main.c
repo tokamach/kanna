@@ -14,7 +14,6 @@ int main(int argc, char **argv)
   {
     if(editor.dirty)
       term_draw(&editor);
-
     term_update(&editor);
   }
 

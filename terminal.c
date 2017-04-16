@@ -57,29 +57,27 @@ void term_update(Editor *e)
 
   switch(c) {
   case KEY_BACKSPACE:
-    vector_pop(&e->buf);
-    e->dirty = 1;
+    editor_backspace(e);
     break;
 
   case KEY_DOWN:
-    e->cur_y++;
+    editor_down(e);
     break;
 
   case KEY_UP:
-    e->cur_y--;
+    editor_up(e);
     break;
 
   case KEY_LEFT:
-    e->cur_x--;
+    editor_back(e);
     break;
 
   case KEY_RIGHT:
-    e->cur_x++;
+    editor_forward(e);
     break;
     
   default:
-    vector_append(&e->buf, c);
-    e->dirty = 1;
+    editor_insert_char(e, c);
   }
   
   term_update_cursor(e);
