@@ -41,7 +41,7 @@ void vector_set(Vector *vector, int pos, char val)
 
 void vector_double_capacity_if_full(Vector *vector)
 {
-  if(vector->size > vector->capacity) {
+  if(vector->size >= vector->capacity) {
     vector->capacity *= 2;
     vector->data = realloc(vector->data, sizeof(char) * vector->capacity);
   }

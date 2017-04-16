@@ -13,13 +13,13 @@ int main(int argc, char **argv)
   vector_append(&text, 'l');
   vector_append(&text, 'l');
   vector_append(&text, 'o');
-  vector_append(&text, '\n');
+  //vector_append(&text, '\n');
 
   term_init();
   while(1)
   {
     term_draw(&text);
-    term_update();
+    term_update(&text);
   }
 
   term_end();

@@ -6,7 +6,7 @@ void term_init()
 {
   initscr();
   
-  timeout(5);
+  timeout(-1);
   cbreak();
   noecho();
   intrflush(stdscr, false);
@@ -15,16 +15,19 @@ void term_init()
 
 void term_draw(Vector *v)
 {
-  refresh();
   for(int i = 0; i < v->size; i++) {
     move(1, i);
     addch(vector_get(v, i));
   }
+
+  refresh();
 }
 
-void term_update()
+void term_update(Vector *v)
 {
-  
+  int c = getch(); //term_get_input();
+
+  vector_append(v, (char)c);
 }
 
 int term_get_input()
