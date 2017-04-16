@@ -7,7 +7,7 @@ void vector_init(Vector *vector)
   vector->size = 0;
   vector->capacity = VECTOR_INITIAL_CAPACITY;
 
-  vector->data = malloc(sizeof(char) * vector->capacity);
+  vector->data = malloc(sizeof(int) * vector->capacity);
 }
 
 void vector_append(Vector *vector, char val)
@@ -43,7 +43,7 @@ void vector_double_capacity_if_full(Vector *vector)
 {
   if(vector->size >= vector->capacity) {
     vector->capacity *= 2;
-    vector->data = realloc(vector->data, sizeof(char) * vector->capacity);
+    vector->data = realloc(vector->data, sizeof(int) * vector->capacity);
   }
 }
 

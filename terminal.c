@@ -15,7 +15,7 @@ void term_init()
 
 void term_draw(Vector *v)
 {
-  char curchar;
+  int curchar;
 
   int i = 0;
   int x = 0;
@@ -27,9 +27,6 @@ void term_draw(Vector *v)
     if(curchar == '\n') {
       y++;
       x = 0;
-    } else if (curchar == 127) { //backspace
-      move(y, x);
-      addch('B');
     } else {
       move(y, x);
       addch(curchar);
@@ -46,10 +43,10 @@ void term_update(Vector *v)
 {
   int c = getch(); //term_get_input();
 
-  if(c == 127) {
+  if(c == KEY_BACKSPACE) {
     vector_append(v, 'B');
   } else {
-    vector_append(v, (char)c);
+    vector_append(v, c);
   }
 }
 
