@@ -3,21 +3,10 @@
 #include <ncurses.h>
 
 #include "vector.h"
+#include "core.h"
 
-typedef struct
-{
-  int dirty; //Should redraw?
-  int cur_x; //Cursor X
-  int cur_y; //Cursor Y
-
-  int offset_x; //how to the side is scrolled
-  int offset_y; //how down is scrolled
-
-} Terminal;
-
-void term_init(Terminal *t);
 void term_begin();
-void term_update_cursor(Terminal *t);
-void term_draw(Terminal *t, Vector *v);
-void term_update(Terminal *t, Vector *v);
+void term_update_cursor(Editor *e);
+void term_draw(Editor *e);
+void term_update(Editor *e);
 void term_end();

@@ -1,17 +1,8 @@
 #include <ncurses.h>
 
 #include "vector.h"
+#include "core.h"
 #include "terminal.h"
-
-void term_init(Terminal *t)
-{
-  t->dirty = 1;
-  t->cur_x = 0;
-  t->cur_y = 0;
-
-  t->offset_x = 0;
-  t->offset_y = 0;
-}
 
 void term_begin()
 {
@@ -24,13 +15,13 @@ void term_begin()
   keypad(stdscr, true);
 }
 
-void term_update_cursor(Terminal *t)
+void term_update_cursor(Editor *e)
 {
-  move(t->cur_y, t->cur_x);
+  move(e->cur_y, e->cur_x);
   refresh();
 }
 
-void term_draw(Terminal *t, Vector *v)
+void term_draw(Editor *e)
 {
   int curchar;
 
@@ -40,8 +31,8 @@ void term_draw(Terminal *t, Vector *v)
 
   clear();
 
-  while(i < v->size) {
-    curchar = vector_get(v, i);
+  while(i < e->buf.size) {
+    curchar = vector_get(&e->buf, i);
 
     if(curchar == '\n') {
       y++;
@@ -57,41 +48,41 @@ void term_draw(Terminal *t, Vector *v)
   }
 
   refresh();
-  t->dirty = 0;
+  e->dirty = 0;
 }
 
-void term_update(Terminal *t, Vector *v)
+void term_update(Editor *e)
 {
   int c = getch(); //term_get_input();
 
   switch(c) {
   case KEY_BACKSPACE:
-    vector_pop(v);
-    t->dirty = 1;
+    vector_pop(&e->buf);
+    e->dirty = 1;
     break;
 
   case KEY_DOWN:
-    t->cur_y++;
+    e->cur_y++;
     break;
 
   case KEY_UP:
-    t->cur_y--;
+    e->cur_y--;
     break;
 
   case KEY_LEFT:
-    t->cur_x--;
+    e->cur_x--;
     break;
 
   case KEY_RIGHT:
-    t->cur_x++;
+    e->cur_x++;
     break;
     
   default:
-    vector_append(v, c);
-    t->dirty = 1;
+    vector_append(&e->buf, c);
+    e->dirty = 1;
   }
   
-  term_update_cursor(t);
+  term_update_cursor(e);
 }
 
 void term_end()

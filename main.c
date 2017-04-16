@@ -1,24 +1,21 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "core.h"
 #include "terminal.h"
-#include "vector.h"
 
 int main(int argc, char **argv)
 {
-  Vector text;
-  vector_init(&text);
-
-  Terminal term;
-  term_init(&term);
+  Editor editor;
+  editor_init(&editor);
 
   term_begin();
   while(1)
   {
-    if(term.dirty)
-      term_draw(&term, &text);
+    if(editor.dirty)
+      term_draw(&editor);
 
-    term_update(&term, &text);
+    term_update(&editor);
   }
 
   term_end();
