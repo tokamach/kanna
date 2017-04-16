@@ -1,5 +1,4 @@
 #include <ncurses.h>
-#include <stdlib.h>
 
 #include "vector.h"
 #include "terminal.h"
@@ -9,6 +8,9 @@ void term_init(Terminal *t)
   t->dirty = 1;
   t->cur_x = 0;
   t->cur_y = 0;
+
+  t->offset_x = 0;
+  t->offset_y = 0;
 }
 
 void term_begin()
@@ -35,6 +37,8 @@ void term_draw(Terminal *t, Vector *v)
   int i = 0;
   int x = 0;
   int y = 0;
+
+  clear();
 
   while(i < v->size) {
     curchar = vector_get(v, i);
@@ -88,7 +92,6 @@ void term_update(Terminal *t, Vector *v)
   }
   
   term_update_cursor(t);
-  //clear();
 }
 
 void term_end()
