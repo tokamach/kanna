@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "core.h"
+#include "gap_buffer.h"
 
 void editor_init(Editor *e)
 {
@@ -11,19 +12,18 @@ void editor_init(Editor *e)
   e->offset_x = 0;
   e->offset_y = 0;
 
-  vector_init(&e->buf);
+  gb_init(&e->buf);
 }
 
 //movement functions
 void editor_forward(Editor *e)
 {
-  e->cur_x++;
+  gb_move_by(&e->buf, 1);
 }
 
 void editor_back(Editor *e)
 {
-  if(e->cur_x > 0)
-    e->cur_x--;
+  gb_move_by(&e->buf, -1);
 }
 
 void editor_up(Editor *e)
@@ -40,20 +40,18 @@ void editor_down(Editor *e)
 //insertion and deletion
 void editor_insert_char(Editor *e, char c)
 {
-  vector_append(&e->buf, c);
+  gb_insert_char(&e->buf, c);
   e->dirty = 1;
 }
 
 void editor_insert_str(Editor *e, char *s)
 {
-  for (int i = 0; i < strlen(s); i++) {
-    editor_insert_char(e, s[i]);
-  }
+  gb_insert_str(&e->buf, s);
   e->dirty = 1;
 }
 
 void editor_backspace(Editor *e)
 {
-  vector_pop(&e->buf);
+  gb_delete(&e->buf);
   e->dirty = 1;
 }
