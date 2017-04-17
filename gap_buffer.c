@@ -85,8 +85,8 @@ char* gb_get_content(GapBuffer *gb)
   int gap_size = gb->gap_end - gb->gap_start;
   char *ret = malloc(sizeof(char) * (gb->end - gap_size));
 
-  memcpy(ret, gb->data, gb->gap_start);
-  memcpy(ret + gb->gap_start, gb->data + gb->gap_end + 1, gb->end - gb->gap_end);
+  memcpy(ret, gb->data, sizeof(char) * gb->gap_start);
+  memcpy(ret + gb->gap_start, gb->data + gb->gap_end + 1, sizeof(char) * (gb->end - gb->gap_end));
 
   return ret;
 }
