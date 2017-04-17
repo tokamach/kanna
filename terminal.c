@@ -1,6 +1,6 @@
 #include <ncurses.h>
 
-#include "vector.h"
+#include "gap_buffer.h"
 #include "core.h"
 #include "terminal.h"
 
@@ -23,29 +23,7 @@ void term_update_cursor(Editor *e)
 
 void term_draw(Editor *e)
 {
-  int curchar;
-
-  int i = 0;
-  int x = 0;
-  int y = 0;
-
-  clear();
-
-  while(i < e->buf.size) {
-    curchar = vector_get(&e->buf, i);
-
-    if(curchar == '\n') {
-      y++;
-      x = 0;
-      move(y,x);
-    } else {
-      move(y, x);
-      addch(curchar);
-      x += 1;
-    }
-
-    i += 1;
-  }
+  char *content = gb_get_content(&e->buf);
 
   refresh();
   e->dirty = 0;
