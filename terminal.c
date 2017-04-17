@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <string.h>
 
 #include "gap_buffer.h"
 #include "core.h"
@@ -24,6 +25,12 @@ void term_update_cursor(Editor *e)
 void term_draw(Editor *e)
 {
   char *content = gb_get_content(&e->buf);
+  int contentlen = strlen(content);
+
+  for(int i = 0; i < contentlen; i++) {
+    move(0, i);
+    addch(content[i]);
+  }
 
   refresh();
   e->dirty = 0;
