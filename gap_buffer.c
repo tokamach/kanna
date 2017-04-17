@@ -1,6 +1,7 @@
 //yukari would approve
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "gap_buffer.h"
@@ -16,7 +17,7 @@ void gb_init(GapBuffer *gb)
 
   gb->cursor = 0;
 
-  data = malloc(sizeof(char) * GB_INITIAL_SIZE);
+  gb->data = malloc(sizeof(char) * GB_INITIAL_SIZE);
 }
 
 //util
@@ -25,17 +26,17 @@ void gb_move_gap(GapBuffer *gb)
   if(gb->cursor == gb->gap_start)
     return;
 
-  char *temp;
+  char *src;
   int length;
 
-  int gap_size = g->gap_end - g->gap_start;
+  int gap_size = gb->gap_end - gb->gap_start;
 
   // gap is ahead of cursor
   if(gb->cursor <= gb->gap_start) {
     src = gb->data + gb->cursor;
     length = gb->gap_start - gb->cursor;
 
-    memmove(gb->data + gb->cursor + gap_size+1, temp, sizeof(char) * length);
+    memmove(gb->data + gb->cursor + gap_size+1, src, sizeof(char) * length);
 
     gb->gap_start -= length;
     gb->gap_end -= length;
@@ -49,9 +50,9 @@ void gb_move_gap(GapBuffer *gb)
 
     memmove(gb->data + gb->gap_start, src, sizeof(char) * length);
     
-    g->gap_end += length;
-    g->gap_start += length;
-    g->cursor = g->gap_start;
+    gb->gap_end += length;
+    gb->gap_start += length;
+    gb->cursor = gb->gap_start;
   }
 
   //cursor is inside or outside gap, fuck
@@ -69,13 +70,25 @@ void gb_resize_buffer(GapBuffer *gb)
   char *newdata = realloc(gb->data, sizeof(char) * new_size);
   gb->data = newdata;
   
-  char *src = gb->buffer + gb->gap_end + 1;
-  char *dest = gb->buffer + new_size - length;
+  char *src = gb->data + gb->gap_end + 1;
+  char *dest = gb->data + new_size - size;
 
-  memmove(dest, src, sizeof(char) * length);
+  memmove(dest, src, sizeof(char) * size);
 
   gb->end = new_size - 1;
-  gb->gap_end = gb->end - length;
+  gb->gap_end = gb->end - size;
+}
+
+// this isn't gonna work
+char* gb_get_content(GapBuffer *gb)
+{
+  int gap_size = gb->gap_end - gb->gap_start;
+  char *ret = malloc(sizeof(char) * (gb->end - gap_size));
+
+  memcpy(ret, gb->data, gb->gap_start);
+  memcpy(ret + gb->gap_start, gb->data + gb->gap_end + 1, gb->end - gb->gap_end);
+
+  return ret;
 }
 
 void gb_move_by(GapBuffer *gb, signed int mov)
@@ -89,7 +102,7 @@ void gb_move_by(GapBuffer *gb, signed int mov)
   if (old_cur > gb->gap_end && gb->cursor < gb->gap_end)
     gb->cursor -= gap_size;
   // cursor crossed gap threshold, while moving right
-  else if (old_position <= gb->gap_start && gb->cursor > gb->gap_start)
+  else if (old_cur <= gb->gap_start && gb->cursor > gb->gap_start)
     gb->cursor += gap_size;
 
   //check if cursor did an illegal move
@@ -128,8 +141,8 @@ void gb_insert_str(GapBuffer *gb, char *vals)
     gb_resize_buffer(gb);
 
   do {
-    gb_insert_char(gb, *vals++)
-  } while (--length > 0)
+    gb_insert_char(gb, *vals++);
+  } while (--length > 0);
 }
 
 void gb_delete(GapBuffer *gb)

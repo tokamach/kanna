@@ -27,6 +27,9 @@ void gb_free(GapBuffer *gb);
 void gb_move_gap(GapBuffer *gb);
 void gb_resize_buffer(GapBuffer *gb);
 
+char* gb_get_content(GapBuffer *gb);
+
+//move cursor
 void gb_move_by(GapBuffer *gb, signed int mov);
 
 void gb_insert_char(GapBuffer *gb, char val);
