@@ -19,11 +19,11 @@ void editor_init(Editor *e)
 
 void editor_update_line_lengths(Editor *e)
 {
-  int i = 0;
   int linesize = 0;
   char *content = gb_get_content(&e->buf);
   int content_length = strlen(content);
 
+  int i = 0;
   do {
     if(content[i] == '\n') {
       vector_append(&e->line_lengths, (char)linesize);

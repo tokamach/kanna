@@ -27,9 +27,20 @@ void term_draw(Editor *e)
   char *content = gb_get_content(&e->buf);
   int contentlen = strlen(content);
 
+  int x = 0;
+  int y = 0;
+
   for(int i = 0; i < contentlen; i++) {
-    move(0, i);
-    addch(content[i]);
+    char curchar = content[i];
+
+    if(curchar == '\n') {
+      y++;
+      x = 0;
+    } else {
+      move(y, x);
+      addch(curchar);
+      x++;
+    }
   }
 
   refresh();
