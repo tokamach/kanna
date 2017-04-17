@@ -30,5 +30,3 @@ void editor_insert_char(Editor *e, char c);
 void editor_insert_str(Editor *e, char *s);
 void editor_backspace(Editor *e);
 
-//util
-void editor_update_line_lengths(Editor *e);
