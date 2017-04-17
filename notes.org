@@ -4,7 +4,6 @@ Like kanna kamui must be:
 ** magical
 * Todo
 ** core
-*** Remove vector dependency for gapbuf
 *** add read and write files from gapbuf
 *** implement ncurses terminal ui
 ** keymap
