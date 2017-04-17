@@ -10,7 +10,7 @@ void vector_init(Vector *vector)
   vector->data = malloc(sizeof(int) * vector->capacity);
 }
 
-void vector_append(Vector *vector, char val)
+void vector_append(Vector *vector, int val)
 {
   vector_double_capacity_if_full(vector);
 
@@ -23,7 +23,7 @@ void vector_pop(Vector *vector)
   vector->size--;
 }
 
-char vector_get(Vector *vector, int pos)
+int vector_get(Vector *vector, int pos)
 {
   if(pos >= vector->size || pos < 0)
   {
@@ -36,7 +36,7 @@ char vector_get(Vector *vector, int pos)
   return vector->data[pos];
 }
 
-void vector_set(Vector *vector, int pos, char val)
+void vector_set(Vector *vector, int pos, int val)
 {
   while(pos >= vector->size) {
     vector_append(vector, 0);
