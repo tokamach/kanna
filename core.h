@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gap_buffer.h"
+#include "vector.h"
 
 typedef struct
 {
@@ -12,12 +13,11 @@ typedef struct
   int offset_y; //how down is scrolled
 
   GapBuffer buf;
+  Vector line_lengths; // vector of the length of each line
 
 } Editor;
 
 void editor_init(Editor *e);
-
-//standard editor functions
 
 //movement
 void editor_forward(Editor *e);
@@ -29,3 +29,6 @@ void editor_down(Editor *e);
 void editor_insert_char(Editor *e, char c);
 void editor_insert_str(Editor *e, char *s);
 void editor_backspace(Editor *e);
+
+//util
+void editor_update_line_lengths(Editor *e);

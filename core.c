@@ -2,6 +2,7 @@
 
 #include "core.h"
 #include "gap_buffer.h"
+#include "vector.h"
 
 void editor_init(Editor *e)
 {
@@ -13,6 +14,26 @@ void editor_init(Editor *e)
   e->offset_y = 0;
 
   gb_init(&e->buf);
+  vector_init(&e->line_lengths);
+}
+
+void editor_update_line_lengths(Editor *e)
+{
+  int i = 0;
+  int linesize = 0;
+  char *content = gb_get_content(&e->buf);
+  int content_length = strlen(content);
+
+  do {
+    if(content[i] = '\n') {
+      vector_append(&e->line_lengths, (char)linesize);
+      linesize = 0;
+    } else {
+      linesize++;
+    }
+
+    i++;
+  } while(--content_length > 0);
 }
 
 //movement functions
@@ -41,7 +62,9 @@ void editor_down(Editor *e)
 void editor_insert_char(Editor *e, char c)
 {
   gb_insert_char(&e->buf, c);
+
   e->dirty = 1;
+  editor_update_line_lengths(e);
 }
 
 void editor_insert_str(Editor *e, char *s)
@@ -53,5 +76,7 @@ void editor_insert_str(Editor *e, char *s)
 void editor_backspace(Editor *e)
 {
   gb_delete(&e->buf);
+
   e->dirty = 1;
+  editor_update_line_lengths(e);
 }
