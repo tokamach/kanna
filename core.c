@@ -25,7 +25,7 @@ void editor_update_line_lengths(Editor *e)
   int content_length = strlen(content);
 
   do {
-    if(content[i] = '\n') {
+    if(content[i] == '\n') {
       vector_append(&e->line_lengths, (char)linesize);
       linesize = 0;
     } else {
