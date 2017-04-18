@@ -83,7 +83,7 @@ void editor_up(Editor *e)
 
 void editor_down(Editor *e)
 {
-  if(e->cur_y > e->line_lengths.size) {
+  if((e->cur_y < e->line_lengths.size)) {
     e->cur_y++;
     int lowerx = vector_get(&e->line_lengths, e->cur_y);
     if(lowerx < e->cur_x)
