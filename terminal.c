@@ -53,6 +53,7 @@ void term_update(Editor *e)
 
   switch(c) {
   case KEY_BACKSPACE:
+  case 127:
     editor_backspace(e);
     break;
 
