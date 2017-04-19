@@ -4,6 +4,7 @@
 #include "gap_buffer.h"
 #include "core.h"
 #include "terminal.h"
+#include "debug.h"
 
 void term_begin()
 {
@@ -24,6 +25,7 @@ void term_update_cursor(Editor *e)
 
 void term_draw(Editor *e)
 {
+  clear();
   char *content = gb_get_content(&e->buf);
   int contentlen = strlen(content);
 
@@ -43,6 +45,9 @@ void term_draw(Editor *e)
     }
   }
 
+  move(e->cur_y, e->cur_x);
+
+  debug_print(e); //TODO: umm
   refresh();
   e->dirty = 0;
 }

@@ -95,7 +95,7 @@ void editor_down(Editor *e)
 void editor_insert_char(Editor *e, char c)
 {
   gb_insert_char(&e->buf, c);
-
+//editor_forward(e);
   e->dirty = 1;
   update_line_lengths(e);
 }
