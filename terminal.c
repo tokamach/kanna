@@ -19,6 +19,7 @@ void term_begin()
 
 void term_update_cursor(Editor *e)
 {
+  debug_print(e); //TODO: umm
   move(e->cur_y, e->cur_x);
   refresh();
 }
@@ -45,9 +46,7 @@ void term_draw(Editor *e)
     }
   }
 
-  move(e->cur_y, e->cur_x);
-
-  debug_print(e); //TODO: umm
+  term_update_cursor(e);
   refresh();
   e->dirty = 0;
 }

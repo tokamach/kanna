@@ -60,7 +60,6 @@ void editor_forward(Editor *e)
 {
   if(!at_end_of_line(e)) {
     e->cur_x++;
-    gb_move_by(&e->buf, 1);
   }
 }
 
@@ -68,7 +67,6 @@ void editor_back(Editor *e)
 {
   if(!at_start_of_line(e))
     e->cur_x--;
-    gb_move_by(&e->buf, -1);
 }
 
 void editor_up(Editor *e)
