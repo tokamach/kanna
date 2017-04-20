@@ -120,8 +120,11 @@ void editor_insert_char(Editor *e, char c)
   if(c == '\n') {
     e->cur_y++;
     e->cur_x = 0;
-  } else
+  } else {
     e->cur_x++;
+  }
+//editor_forward(e);
+
   e->dirty = 1;
   update_line_lengths(e);
 }

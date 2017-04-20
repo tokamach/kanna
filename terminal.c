@@ -4,6 +4,7 @@
 #include "gap_buffer.h"
 #include "core.h"
 #include "terminal.h"
+#include "debug.h"
 
 void term_begin()
 {
@@ -18,12 +19,14 @@ void term_begin()
 
 void term_update_cursor(Editor *e)
 {
+  debug_print(e); //TODO: umm
   move(e->cur_y, e->cur_x);
   refresh();
 }
 
 void term_draw(Editor *e)
 {
+  clear();
   char *content = gb_get_content(&e->buf);
   int contentlen = strlen(content);
 
@@ -43,6 +46,7 @@ void term_draw(Editor *e)
     }
   }
 
+  term_update_cursor(e);
   refresh();
   e->dirty = 0;
 }
@@ -53,6 +57,7 @@ void term_update(Editor *e)
 
   switch(c) {
   case KEY_BACKSPACE:
+  case 127:
     editor_backspace(e);
     break;
 
