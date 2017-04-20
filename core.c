@@ -13,6 +13,8 @@ void editor_init(Editor *e)
   e->offset_x = 0;
   e->offset_y = 0;
 
+  e->prev_index = 0;
+
   gb_init(&e->buf);
   vector_init(&e->line_lengths);
 }
@@ -55,12 +57,26 @@ int at_end_of_line(Editor *e)
     return 0;
 }
 
+// see how far through the file you are
+// translates x and y into a single array index
+int get_index_in_file(Editor *e)
+{
+  int acc = 0;
+
+  for(int i = 0; i < e->cur_y - 1; i++) {
+    acc += vector_get(&e->line_lengths, i);
+  }
+
+  acc += e->cur_x;
+
+  return acc;
+}
+
 //movement functions
 void editor_forward(Editor *e)
 {
   if(!at_end_of_line(e)) {
     e->cur_x++;
-    gb_move_by(&e->buf, 1);
   }
 }
 
@@ -68,7 +84,6 @@ void editor_back(Editor *e)
 {
   if(!at_start_of_line(e))
     e->cur_x--;
-    gb_move_by(&e->buf, -1);
 }
 
 void editor_up(Editor *e)
@@ -94,8 +109,19 @@ void editor_down(Editor *e)
 //insertion and deletion
 void editor_insert_char(Editor *e, char c)
 {
+  //recalculate index
+  int new_index = get_index_in_file(e);
+  int diff = new_index - e->prev_index;
+  gb_move_by(&e->buf, diff);
+  e->prev_index = new_index;
+
   gb_insert_char(&e->buf, c);
 
+  if(c == '\n') {
+    e->cur_y++;
+    e->cur_x = 0;
+  } else
+    e->cur_x++;
   e->dirty = 1;
   update_line_lengths(e);
 }

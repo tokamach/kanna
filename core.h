@@ -12,6 +12,8 @@ typedef struct
   int offset_x; //how to the side is scrolled
   int offset_y; //how down is scrolled
 
+  int prev_index;
+
   GapBuffer buf;
   Vector line_lengths; // vector of the length of each line
 
